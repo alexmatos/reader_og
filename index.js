@@ -1,6 +1,7 @@
 const URLReader = require('./bots/botURLReader')
 const DownPage = require('./bots/botDownPage')
 const ScrapingOG = require('./bots/botScrapingOG')
+const Spider = require('./bots/botSpider')
 
 const main = function () {
   const url = URLReader()
@@ -11,8 +12,15 @@ const main = function () {
   }
 
   console.log('Estamos processando a extração dos dados da página...')
-  DownPage(url, ScrapingOG)
+
+  DownPage(url, Spider, (err, result) => {
+    console.log(result)
+    return true
+  })
   
+  // DownPage(url, ScrapingOG)
+
+
 }
 
 main()
