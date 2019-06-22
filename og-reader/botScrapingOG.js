@@ -1,5 +1,5 @@
 const cheerio = require('cheerio')
-const Page = require('../model/page')
+const Page = require('./page')
 
 const readMetaTag = ($, meta) => {
     return $(`meta[property="og:${meta}"]`).attr('content')
@@ -8,13 +8,13 @@ const readMetaTag = ($, meta) => {
 const ScrapingOG = (page) => {
     const $ = cheerio.load(page.data)
 
-    const pageOG = Object.create(Page)
-    pageOG.title = readMetaTag($, 'title')
-    pageOG.type = readMetaTag($, 'type')
-    pageOG.image = readMetaTag($, 'image')
-    pageOG.url = readMetaTag($, 'url')
+    let title = readMetaTag($, 'title')
+    let type = readMetaTag($, 'type')
+    let image = readMetaTag($, 'image')
+    let url = readMetaTag($, 'url')
+    let pageOG = new Page(url, title, image, type)
 
-    if (!pageOG.title && !pageOG.type && !pageOG.image && !pageOG.url)
+    if (!pageOG.isValid)
         return false
 
     return pageOG

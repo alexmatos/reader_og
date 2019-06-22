@@ -9,8 +9,6 @@ class PageRepository {
     }
 
     save(page) {
-        console.log(page)
-
         if(this.exists(page.url))
             return false
 
@@ -19,7 +17,7 @@ class PageRepository {
     }
 
     saveAll(pages) {
-        pages.array.forEach(page => {
+        pages.forEach(page => {
             this.save(page)
         });
     }
